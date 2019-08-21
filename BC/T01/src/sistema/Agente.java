@@ -35,8 +35,20 @@ public class Agente implements PontosCardeais {
         //  contador de acoes
         ct++;
         // @todo T1: perceber por meio do sensor a posicao atual e imprimir
+        System.out.println("posição atual: (" + sensorPosicao().getLin() + ", " + sensorPosicao().getCol() + ")");
         // @todo T1: a cada acao escolher uma acao {N, NE, L, SE, S, SO, O, NO}
-        executarIr(N); //executar a acao escolhida
+        if(sensorPosicao().getLin() > 4 && sensorPosicao().getCol() == 0)
+        	executarIr(N); //executar a acao escolhida
+        else if(sensorPosicao().getCol() < 3 && sensorPosicao().getLin() == 4)
+        	executarIr(L);
+        else if(sensorPosicao().getLin() < 8 && sensorPosicao().getCol() == 3)
+        	executarIr(S);
+        else if(sensorPosicao().getCol() < 8 && sensorPosicao().getLin() == 8)
+        	executarIr(L);
+        else if(sensorPosicao().getLin() > 2 && sensorPosicao().getCol() == 8)
+        	executarIr(N);
+        else
+        	return(-1);
         
         return 1; // Se retornar -1, encerra o agente
     }
@@ -46,7 +58,8 @@ public class Agente implements PontosCardeais {
     * @param direcao um dos pontos cardeais
     */
     public int executarIr(int direcao) {
-        //@todo T1 - invocar metodo do Model - atuar no ambiente 
+        //@todo T1 - invocar metodo do Model - atuar no ambiente
+        model.ir(direcao);
         return 1; // deu certo
     }
 
@@ -57,8 +70,9 @@ public class Agente implements PontosCardeais {
      * @return Estado contendo a posição atual do agente no labirinto 
      */
     public Estado sensorPosicao() {
+    	int coord[] = model.lerPos();
         //@todo T1 - sensor deve ler a posicao do agente no labirinto (environment)
-        return new Estado(0,0);
+        return new Estado(coord[0],coord[1]);
     }
     
 }

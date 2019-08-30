@@ -74,23 +74,15 @@ public class Problema implements PontosCardeais {
         lin += incrLin[acao];
         col += incrCol[acao];
         
-        // verifica limites do tabuleiro
-        if (lin < 0)
-            lin = 0;
-        if (col < 0)
-            col = 0;
-        if (lin == crencaLabir.getMaxLin())
-            lin = (crencaLabir.getMaxLin()-1);
-        if (col == crencaLabir.getMaxCol())
-            col = (crencaLabir.getMaxCol()-1);
-        
-        //verifica parede: caso tenha, fica na posicao original
-        if (crencaLabir.parede[lin][col] == 1) {
-            lin = est.getLin();
-            col = est.getCol();
+        int acoespossiveis[] = acoesPossiveis(est);
+
+        for(int i = 0; i < 8; i++){
+            if(acoespossiveis[acao] == 1){
+                return new Estado(lin, col);
+            }
         }
-            
-        return new Estado(lin, col);
+
+        return est;
     }
 
     /**

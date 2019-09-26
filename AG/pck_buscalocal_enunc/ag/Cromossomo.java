@@ -223,9 +223,11 @@ public class Cromossomo implements ConfigAG {
     {
         // INICIALIZAR CADA GENE DO CROMOSSOMO COM UM VALOR
         /* Aqui, inicializamos o cromossomo com as rainhas nas diagonais*/
-        /*for(int i = 0; i < ConfigAG.NUM_GENES; i++)
+        long aux;
+        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
         {
-            setarGene(i, iL*2); 
-        }*/
+            aux = i;
+            setarGene(i, aux*2); 
+        }
     }
 }

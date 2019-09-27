@@ -9,6 +9,7 @@ import agNRainhas.AGNRainhas;
 import bits.Bits;
 import java.util.BitSet;
 import java.util.Random;
+import java.lang.*;
 
 /**
  * Permite implementar um cromossomo com codificacao binaria. O cromossomo eh
@@ -23,7 +24,6 @@ public class Cromossomo implements ConfigAG {
      * fitness do cromossomo
      */
     public float fitness;
-
 
     // DESEMPENHO
     /**
@@ -102,65 +102,28 @@ public class Cromossomo implements ConfigAG {
     }
 
     /**
-     * FAZER
+     * so conserta para um num aleatorio de 0 a 9 caso haja algum gene 
+     * infactivel
      */
-    private void reparar()
-    {
-        // Procurar uma rainha incorreta e reparar
-        // Jeito mais fácil é remover a rainha da posição errada. (Switch 1 para 0).
-
-        // Fazer isso para todas as rainhas incorretas
-        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            for(int j = 0; j < ConfigAG.NUM_LOCUS; i++)
-            {
-                // Situações de rainha errada:
-                // Mesma Coluna
-                // Mesma Linha
-                // Diagonais
-                // Acho que dá pra fazer recursivo
-            }
+    private void reparar() {
+        int gene = infactivel();
+        Random gerador = new Random();
+        gerador.setSeed(System.currentTimeMillis());
+        while(gene > -1){
+            this.setarGene(gene, gerador.nextInt(10)); 
+            gene = infactivel();
         }
     }
 
     /**
-     * FAZER
+     * se o cromossomo tiver genes infactiveis (como um numero maior que o total
+     * de linhas) retorna o numero do gene infactivel, se nao retorna -1
      */
-    private int infactivel()
-    {
-        // Quando ele é infactível?
-        // Rainhas em posições que não podem acontecer:
-        
-        // Mesma Coluna = Mais de um número 1 no gene
-        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            for(int j = 0; j < ConfigAG.NUM_LOCUS; j++)
-            {
-                // Checar se tem mais que um número 1 no gene
-                // se sim, retorna qualquer valor >=0
-                // se não, faz nada
-                // Acho que dá pra fazer recursivo
-            }
-        }
-        // Mesma Linha = Genes diferentes com número 1 na mesma posição de locus
-        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            for(int j=0; j < ConfigAG.NUM_LOCUS; j++)
-            {
-                // Checar entre dois genes se tem número 1 no mesmo locus
-                // se sim, retorna qualquer valor >=0
-                // se não, faz nada   
-                // Acho que dá pra fazer recursivo             
-            }
-        }
-        // Mesma diagonal (esse é mais difícil de checar)
-        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            for(int j = 0; j < ConfigAG.NUM_LOCUS; j++)
-            {
-                // Checar locus -1, locus+1 no gene anterior e próximo gene.
-                // Dá para fazer esse -1 na verdade ser um -i, dado o indice. Ver se funciona depois
-                // Acho que dá pra fazer recursivo
+    private int infactivel() {
+        int i;
+        for(i = 0; i < ConfigAG.NUM_GENES; i++){        
+            if(this.lerGene(i) > AGNRainhas.NUM_RAINHAS - 1){
+                return i;
             }
         }
         return -1;
@@ -171,46 +134,41 @@ public class Cromossomo implements ConfigAG {
      * flag PENALIZACAO=true entao penalizar o fitness; caso contrario, reparar
      * o individuo
      */
-    protected void calcularFitness()
-    {
-   
-        // Ideias: quanto mais rainhas "certas", maior o fitness. 
-        // Aqui, permitimos que cromossomos tenham menos que 10 rainhas.
+    protected void calcularFitness() {
+        int i, j, genei, genej;
         ctChamadasFitness++;
 
-        if (!ConfigAG.PENALIZACAO)
-        {
+        if (!ConfigAG.PENALIZACAO) {
             this.reparar();
-        } 
-        else if (this.infactivel() >= 0) 
-        {
-            for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-            {
-                if(lerGene(i) != 0)
-                {
-                    if(lerGene(i)%2 == 0)
-                    {
-                        this.fitness++;
-                    }
-                    else
-                    {
-                        // Penalização: perde por ter 2 ou mais rainhas na mesma coluna.
-                        this.fitness--;
-                    }
-                }
-            }
+        } else if (this.infactivel() >= 0) {
+            this.fitness = 0;
             return;
         }
 
         // CALCULAR FITNESS PARA SITUACOES NORMAIS
-        this.fitness = 0;
-        for (int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            if(lerGene(i) != 0)
-            {
-                if(lerGene(i)%2 == 0)
-                {
-                    this.fitness++;
+        this.fitness = AGNRainhas.MAX_FIT;
+        
+        //*********************Calculando fitness                                //      |_|_|_|_|_|_|_|_|_|_|
+        // Cada gene (rainha) perde 1 sempre estiver sob ataque em uma           //      |_|_|_|_|_|_|_|_|_|_|
+        // das 4 direcoes (linha, coluna, diagonais crescente e decrescente      //      |_|_|_|_|_|_|_|_|_|1|
+        // as colunas nao precisam ser testadas pois a modelagem do problema ja  //      |_|_|_|_|_|_|_|_|_|_|
+        // garante que so havera uma rainha em cada coluna                       //      |_|_|_|_|_|_|_|_|_|_|
+                                                                                 //      |_|_|_|_|_|_|_|_|_|_|
+        for(i = 0; i < ConfigAG.NUM_GENES; i++){                                 //      |_|_|_|_|_|_|_|_|_|_|
+            genei = (int)this.lerGene(i); 
+            for(j = 0; j < ConfigAG.NUM_GENES; j++){                             //      |_|_|_|_|_|_|_|_|_|_|
+                if(j != i){                                                      //      |_|_|_|_|_|_|_|_|_|_|
+                    // confere se ha mais uma rainha (j) na mesma linha que a que    
+                    // esta sendo verificada (i)                                     
+                    genej = (int)this.lerGene(j);                                //      |_|_|_|_|_|_|_|_|_|_|
+                    if(genei == genej){ 
+                        this.fitness--;
+                    }
+                    //confere se ha uma rainha (j) nas diagonais
+                    // sim, isso da certo
+                    if(Math.abs(j - i) == Math.abs(genej - genei)){
+                        this.fitness--;
+                    }
                 }
             }
         }
@@ -219,15 +177,12 @@ public class Cromossomo implements ConfigAG {
     /**
      * Preencher um cromossomo com valores iniciais (depende do problema)
      */
-    public void inicializarCromossomo()
-    {
-        // INICIALIZAR CADA GENE DO CROMOSSOMO COM UM VALOR
-        /* Aqui, inicializamos o cromossomo com as rainhas nas diagonais*/
-        long aux;
-        for(int i = 0; i < ConfigAG.NUM_GENES; i++)
-        {
-            aux = i;
-            setarGene(i, aux*2); 
+    public void inicializarCromossomo() {
+        Random gerador = new Random();
+        gerador.setSeed(System.currentTimeMillis());
+        int i;
+        for(i = 0; i < ConfigAG.NUM_GENES; i++){
+            this.setarGene(i, gerador.nextLong());
         }
     }
 }

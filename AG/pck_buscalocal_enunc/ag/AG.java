@@ -171,7 +171,7 @@ public class AG implements ConfigAG {
             geracao++;
             
             // Para coletar dados geracao a geracao de uma execucao especifica descomentar...
-            // System.out.println("Ger: "+ geracao + " Melhor: " + crom[0].imprimirCSV());
+            //System.out.println("Ger: "+ geracao + " Melhor: " + crom[0].imprimirCSV());
             
         } while (geracao < MAX_GERACOES && melhorFit != (float) AGNRainhas.MAX_FIT);
         return melhorCrom;

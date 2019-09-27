@@ -1,0 +1,103 @@
+////////////////////////////////////////////////
+Tamanho da população: 20 
+Max Gerações: 50
+Probabilidade de Crossover: 0.70
+Probabilidade de Mutação: 0.045
+////////////////////////////////////////////////
+reparação:
+	Média fitness das execuções         -> 135,87
+	Soluções (inclusive repetidas)      -> 264
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0528
+	Número chamadas fitness             -> 4922460
+	Soluções/1.000 chamadas fit         -> 0,0536
+	Tempo (s)                           -> 26,55
+
+penalização:
+	Média fitness das execuções         -> 118,31
+	Soluções (inclusive repetidas)      -> 239
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0478
+	Número chamadas fitness             -> 4933460
+	Soluções/1.000 chamadas fit         -> 0,0484
+	Tempo (s)                           -> 26,85
+////////////////////////////////////////////////
+Tamanho da população: 50
+Max Gerações: 80
+Probabilidade de Crossover: 0.80
+Probabilidade de Mutação: 0.055
+////////////////////////////////////////////////
+reparação:
+	Média fitness das execuções         -> 130,51
+	Soluções (inclusive repetidas)      -> 250
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0500
+	Número chamadas fitness             -> 4931160
+	Soluções/1.000 chamadas fit         -> 0,0507
+	Tempo (s)                           -> 26,20
+
+penalização:
+	Média fitness das execuções         -> 129,89
+	Soluções (inclusive repetidas)      -> 266
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0532
+	Número chamadas fitness             -> 4918640
+	Soluções/1.000 chamadas fit         -> 0,0541
+	Tempo (s)                           -> 26,33
+////////////////////////////////////////////////
+Tamanho da população: 100
+Max Gerações: 130
+Probabilidade de Crossover: 0.99
+Probabilidade de Mutação: 0.1
+////////////////////////////////////////////////
+reparação:
+	Média fitness das execuções         -> 145,79
+	Soluções (inclusive repetidas)      -> 275
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0550
+	Número chamadas fitness             -> 4926300
+	Soluções/1.000 chamadas fit         -> 0,0558
+	Tempo (s)                           -> 25,80
+
+penalização:
+	Média fitness das execuções         -> 128,01
+	Soluções (inclusive repetidas)      -> 261
+	Desempenho (soluções/MAX_EXECUCOES) -> 0,0522
+	Número chamadas fitness             -> 4929660
+	Soluções/1.000 chamadas fit         -> 0,0529
+	Tempo (s)                           -> 25,81
+
+
+4,8,0,9,3,6,2,7,5,1
+ _ _ _ _ _ _ _ _ _ _
+|_|_|R|_|_|_|_|_|_|_|
+|_|_|_|_|_|_|_|_|_|R|
+|_|_|_|_|_|_|R|_|_|_|
+|_| |_|_|R|_|_|_|_|_|
+|R|_|_|_|_|_|_|_|_|_|
+|_|_|_|_|_|_|_|_|R|_|
+|_|_|_|_|_|R|_|_|_|_|
+|_|_|_|_|_|_|_|R|_|_|
+|_|R|_|_|_|_|_|_|_|_|
+|_|_|_|R|_|_|_|_|_|_|
+
+1,5,7,2,6,3,9,0,8,4
+ _ _ _ _ _ _ _ _ _ _
+|_|_|_|_|_|_|_|R|_|_|
+|R|_|_|_|_|_|_|_|_|_|
+|_|_|_|R|_|_|_|_|_|_|
+|_|_|_|_|_|R|_|_|_|_|
+|_|_|_|_|_|_|_|_|_|R|
+|_|R|_|_|_|_|_|_|_|_|
+|_|_|_|_|R|_|_|_|_|_|
+|_|_|R|_|_|_|_|_|_|_|
+|_|_|_|_|_|_|_|_|R|_|
+|_|_|_|_|_|_|R|_|_|_|
+
+6,2,7,1,3,0,9,4,8,5
+ _ _ _ _ _ _ _ _ _ _
+|_|_|_|_|_|R|_|_|_|_|
+|_|_|_|R|_|_|_|_|_|_|
+|_|R|_|_|_|_|_|_|_|_|
+|_|_|_|_|R|_|_|_|_|_|
+|_|_|_|_|_|_|_|R|_|_|
+|_|_|_|_|_|_|_|_|_|R|
+|R|_|_|_|_|_|_|_|_|_|
+|_|_|R|_|_|_|_|_|_|_|
+|_|_|_|_|_|_|_|_|R|_|
+|_|_|_|_|_|_|R|_|_|_|

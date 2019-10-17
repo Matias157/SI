@@ -1,4 +1,4 @@
-:- dynamic you_have/1, location/2, gate/1, ducks_lost/1.
+:- dynamic you_have/1, location/2, gate/0, ducks_lost/1.
 
 location(egg, duck_pen).
 location(ducks, duck_pen).
@@ -22,7 +22,8 @@ Checa se estamos no duck_pen. Se não beleza, se sim, retorna False e vai para s
 */
 
 gate_check(X):-
-	dif(X,duck_pen).
+	dif(X,duck_pen),
+	nl.
 
 /*
 Quando estamos no duck_pen, verifica se o portão tá aberto. Se sim, entramos no duck_pen, e os patos fogem pro jardim
@@ -30,12 +31,12 @@ Quando estamos no duck_pen, verifica se o portão tá aberto. Se sim, entramos n
 
 gate_check(X):-
 	X == duck_pen,
-	open(gate),
+	gate,
 	location(you, L),
 	connect(L, X),
 	retract(location(ducks, duck_pen)),
 	assert(location(ducks, yard)),
-	write(" The ducks have run into the yard"),
+	write("The ducks have run into the yard"),
 	nl.
 
 /*
@@ -70,7 +71,7 @@ Esse fato precisa existir para poder se mover para o duck_pen
 open(X):-
 	location(you, yard),
 	X==gate,
-	assert(gate(X)),
+	assert(gate),
 	write("Open "), write(X), nl.
 
 /*
@@ -110,7 +111,6 @@ go :-
 	write(">> "),
 	read(X),
 	call(X),
-	fox,
 	go.
 
 /*

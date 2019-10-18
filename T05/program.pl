@@ -1,9 +1,11 @@
-:- dynamic you_have/1, location/2, gate/0, ducks_lost/1.
+:- dynamic you_have/1, location/2, gate/0, ducks_eaten/1.
 
 location(egg, duck_pen).
 location(ducks, duck_pen).
 location(fox, woods).
 location(you, house).
+
+ducks_eaten(0).
 
 connect(yard, duck_pen).
 connect(yard, house).
@@ -14,8 +16,8 @@ Se o connect(A, B) não deu certo de primeira, tenta ver se existe connect(B, A)
 */
 connect(X, X).
 connect(X, Y):-
-	x = Z,
-	connect(Y, Z), !.
+	X = Z,
+	connect(Y, Z).
 
 /* 
 Checa se estamos no duck_pen. Se não beleza, se sim, retorna False e vai para segunda instancia de gate_check
@@ -85,12 +87,19 @@ take(X) :-
 	retract(location(egg, duck_pen)),
 	write("You've just taken the egg"), nl.
 
-fox :-	
-	location(ducks, yard),
-	location(you, house),
-	write("The fox has taken a duck"),
-	nl. 
+fox_eats:-
+	write("fox eat"),
+    ducks_eaten(N),
+    retract(ducks_eaten(N)),
+    L is N+1,
+    assert(ducks_eaten(L)).
 
+fox :-
+	write("fox"),
+    location(ducks, yard),
+    location(you, house),
+    write("The fox has taken a duck"), nl,
+    fox_eats.
 /* 
 Inicia o jogo.
 Se done retornar true, fim de jogo.
@@ -111,6 +120,7 @@ go :-
 	write(">> "),
 	read(X),
 	call(X),
+	fox,
 	go.
 
 /*
@@ -122,10 +132,54 @@ done :-
 	you_have(egg),
 	write("Thanks for getting the egg"), nl.
 
-/* 
-* Necessário fazer:
-* reiniciar todas as variáveis quando o jogo acabar
-* fazer função da raposa se mexer por ai
-* fazer raposa sair comendo galinhas
-* portão abre direto se tentar entrar no duck_pen. Fazer usuário ter que abrir o portão pra depois entrar.
-*/
+goto_fox(X) :-
+    location(fox, L),
+    connect(L, X),
+    retract(location(fox, L)),
+    assert(location(fox,X)),
+    write(" fox is in the "), writeln(X).
+
+move_fox(N):-
+    N == 0,
+    goto_fox(woods).
+move_fox(N):-
+    N == 1,
+    goto_fox(yard).
+move_fox(N):-
+    N == 2,
+    goto_fox(house).
+move_fox(N):-
+    N == 3,
+    goto_fox(house).
+
+
+reinicializa:-
+    writeln("reinicializar-----"),
+    retract(you_have(egg)),
+    retract(open_(gate)),
+    retract(location(ducks, yard)),
+    assert(location(ducks, duck_pen)),
+	assert(location(egg, duck_pen)),
+    location(you, L),
+    
+    retract(location(you, L)),
+    retract(location(you, house)),
+    location(fox, D),
+    retract(location(fox, D)),
+    assert(location(fox, woods)),
+    ducks_eaten(N),
+	retract(ducks_eaten(N)),
+    assert(ducks_eaten(0)),
+    you_have(I),
+    write(I),
+    location(ducks, Q),
+    write(Q),
+    location(egg, J),
+    write(J),
+    location(you, K),
+    write(K),
+    location(fox, W),
+    write(W),
+    ducks_eaten(H),
+    write(H),
+    writeln("reinicializar-----").

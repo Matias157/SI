@@ -87,7 +87,7 @@ take(X) :-
 	retract(location(egg, duck_pen)),
 	write("You've just taken the egg"), nl.
 
-fox_eats:-
+fox_take_duck:-
 	write("fox eat"),
     ducks_eaten(N),
     retract(ducks_eaten(N)),
@@ -99,7 +99,7 @@ fox :-
     location(ducks, yard),
     location(you, house),
     write("The fox has taken a duck"), nl,
-    fox_eats.
+    fox_take_duck.
 /* 
 Inicia o jogo.
 Se done retornar true, fim de jogo.
@@ -107,7 +107,8 @@ Se não, executa segunda instancia
 */
 
 go :- 
-	done.
+	done,
+    restart.
 
 /*
 * Escreve >>
@@ -153,8 +154,8 @@ move_fox(N):-
     goto_fox(house).
 
 
-reinicializa:-
-    writeln("reinicializar-----"),
+restart:-
+    writeln("restarting"),
     retract(you_have(egg)),
     retract(open_(gate)),
     retract(location(ducks, yard)),
@@ -182,4 +183,4 @@ reinicializa:-
     write(W),
     ducks_eaten(H),
     write(H),
-    writeln("reinicializar-----").
+    writeln("restarting").

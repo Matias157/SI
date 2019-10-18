@@ -18,19 +18,19 @@ public interface ConfigAG {
      * tamanho da população = quantidade de indivíduos ou cromossomos
      * OBRIGATORIAMENTE UM NÚMERO PAR >= 2
      */
-    public static final int TAM_POP = 20;
+    public static final int TAM_POP = 24;
     /**
      * critério de parada: máximo de gerações a serem criadas
      */
-    public static final int MAX_GERACOES = 50;
+    public static final int MAX_GERACOES = 120;
     /**
      * probabilidade de crossover entre 2 individuos: tipicamente [70%,80%]
      */
-    public static final float PROB_CROSS = (float) 0.7;
+    public static final float PROB_CROSS = (float) 0.75;
     /**
      * probabilidade de mutação de um alelo: deve ser inferior a 5%
      */
-    public static final float PROB_MUT = (float) 0.045;
+    public static final float PROB_MUT = (float) 0.040;
 
     /**
      * penalização: escolhe se é fitness com penalização (caso true). Caso

@@ -122,6 +122,9 @@ go :-
 	read(X),
 	call(X),
 	fox,
+    random(0, 10, N),
+    move_fox(N),
+    writeln(N),
 	go.
 
 /*

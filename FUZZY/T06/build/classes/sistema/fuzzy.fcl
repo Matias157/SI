@@ -1,0 +1,48 @@
+FUNCTION_BLOCK tipper 
+
+VAR_INPUT
+    altura : REAL;
+    peso : REAL;
+END_VAR
+
+VAR_OUTPUT
+    intensidade : REAL;
+END_VAR
+
+FUZZIFY altura
+    TERM baixa := (0, 1) (1.5, 1) (1.65, 0) ; 
+    TERM media := (1.5, 0) (1.65,1) (1.8,0);
+    TERM alta := (1.65,0) (1.8, 1);
+END_FUZZIFY
+
+FUZZIFY peso
+    TERM leve := (0,1) (50,1) (80,0); 
+    TERM medio := (50,0) (80,1) (120,0);
+    TERM pesado := (80,0) (120,1);
+END_FUZZIFY
+
+DEFUZZIFY intensidade
+    TERM baixa := (0,1) (50,1) (75,0);
+    TERM media := (50,0) (75,1) (100,0);
+    TERM alta := (75,0) (100,1);
+
+    METHOD : COG;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK No1
+    AND : MIN;
+    ACT : MIN;
+    ACCU : MAX;
+    RULE 1 : IF altura IS alta and peso IS pesado THEN intensidade IS alta;
+    RULE 2 : IF altura IS alta and peso IS medio THEN intensidade IS media;
+    RULE 1 : IF altura IS alta and peso IS leve THEN intensidade IS baixa;
+    RULE 1 : IF altura IS media and peso IS pesado THEN intensidade IS alta;
+    RULE 1 : IF altura IS media and peso IS medio THEN intensidade IS media;
+    RULE 1 : IF altura IS media and peso IS leve THEN intensidade IS baixa;
+    RULE 1 : IF altura IS baixa and peso IS pesado THEN intensidade IS alta;
+    RULE 1 : IF altura IS baixa and peso IS medio THEN intensidade IS media;
+    RULE 1 : IF altura IS baixa and peso IS leve THEN intensidade IS baixa;
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
